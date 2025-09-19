@@ -24,19 +24,20 @@ const ContactForm = () => {
 
     // Mock API call - replace with your actual API endpoint
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setError(false);
-      setResponseMessage("Your message has been sent successfully! We'll get back to you soon.");
-      
-      // Reset form
-      setName("");
-      setEmail("");
-      setPhone("");
-      setMessage("");
-      setSmsConsent(false);
-      setMarketingConsent(false);
+      const response = await fetch('/api/contact', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name,
+    email,
+    phone,
+    message,
+    smsConsent,
+    marketingConsent,
+  }),
+});
     } catch (error) {
       setError(true);
       setResponseMessage("Error sending message. Please try again.");
