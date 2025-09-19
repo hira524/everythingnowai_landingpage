@@ -1,0 +1,622 @@
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+// Contact Form Component
+const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [smsConsent, setSmsConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setResponseMessage("");
+
+    // Mock API call - replace with your actual API endpoint
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setError(false);
+      setResponseMessage("Your message has been sent successfully! We'll get back to you soon.");
+      
+      // Reset form
+      setName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
+      setSmsConsent(false);
+      setMarketingConsent(false);
+    } catch (error) {
+      setError(true);
+      setResponseMessage("Error sending message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section className="contact_area section-padding contact-section-bg">
+      <div className="container">
+        <div className="section-title text-center mb-5">
+          <span className="fw-bold">Get in touch</span>
+          <h2 className="display-4 fw-bold mt-2 text-white">
+            Contact us for any kind <br />
+            of inquiry
+          </h2>
+        </div>
+        <div className="row">
+          <div className="offset-lg-1 col-lg-10 col-sm-12 col-xs-12">
+            {responseMessage && (
+              <div
+                className={`alert ${
+                  error ? "alert-danger" : "alert-success"
+                } text-center my-4`}
+              >
+                <p className="mb-0">{responseMessage}</p>
+              </div>
+            )}
+            <div className="contact p-5 rounded-4 shadow-sm contact-form-bg">
+              <form className="form" onSubmit={handleSubmit}>
+                <div className="row g-4">
+                  <div className="form-group col-md-6">
+                    <label htmlFor="name" className="form-label fw-bold text-white">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                      value={name}
+                      name="name"
+                      className="form-control form-control-lg form-control-custom"
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label htmlFor="email" className="form-label fw-bold text-white">Your Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                      value={email}
+                      name="email"
+                      className="form-control form-control-lg form-control-custom"
+                      required
+                    />
+                  </div>
+                  <div className="form-group col-md-12">
+                    <label htmlFor="phone" className="form-label fw-bold text-white">Phone</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+                      value={phone}
+                      name="phone"
+                      className="form-control form-control-lg form-control-custom"
+                    />
+                  </div>
+                  <div className="form-group col-md-12">
+                    <label htmlFor="message" className="form-label fw-bold text-white">Your Message</label>
+                    <textarea
+                      rows={6}
+                      id="message"
+                      name="message"
+                      className="form-control form-control-lg textarea-custom"
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
+                      value={message}
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="form-group col-md-12">
+                    <div className="d-flex align-items-start gap-3">
+                      <input
+                        type="checkbox"
+                        id="smsConsent"
+                        className="form-check-input mt-2 checkbox-custom"
+                        checked={smsConsent}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSmsConsent(e.target.checked)}
+                      />
+                      <label htmlFor="smsConsent" className="form-check-label text-white">
+                        I Consent to Receive SMS Notifications, Alerts from
+                        Everything AI, LLC. Message frequency varies. Messages &
+                        data rates may apply. Text HELP to +1 (866) 357-5662 for
+                        assistance. You can reply STOP to unsubscribe at any time.
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="form-group col-md-12">
+                    <div className="d-flex align-items-start gap-3">
+                      <input
+                        type="checkbox"
+                        id="marketingConsent"
+                        className="form-check-input mt-2 checkbox-custom"
+                        checked={marketingConsent}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMarketingConsent(e.target.checked)}
+                      />
+                      <label htmlFor="marketingConsent" className="form-check-label text-white">
+                        By checking this box I agree to receive occasional
+                        marketing messages from Everything AI, LLC.
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div className="col-md-12">
+                    <p className="text-center text-white mb-3">
+                      <strong>Please read SMS terms and privacy policy before giving your consent.</strong>
+                    </p>
+                    <div className="d-flex justify-content-center gap-4">
+                      <a href="/terms#sms-terms" className="text-decoration-none text-primary">SMS Terms</a>
+                      <span className="text-white">|</span>
+                      <a href="/privacy-policy#sms-privacy-policy" className="text-decoration-none text-primary">SMS Privacy Policy</a>
+                    </div>
+                  </div>
+
+                  <div className="col-md-12 text-center mt-4">
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg px-5 py-3 btn-submit-custom"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          Sending...
+                        </>
+                      ) : (
+                        "Send Message"
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Services Component
+const Services = () => {
+  const [isJSEnabled, setIsJSEnabled] = useState(false);
+
+  useEffect(() => {
+    setIsJSEnabled(true);
+  }, []);
+
+  const service_cards_data = [
+    {
+      image: "/assets/img/8.png",
+      title: "Website Design & Development",
+      description: "Custom website design and development services that create stunning, high-performance websites. We focus on user experience, mobile responsiveness, and conversion optimization.",
+      link: "/services/website-design-development",
+      alt: "Website Design & Development",
+      delay: "200"
+    },
+    {
+      image: "/assets/img/services/modern-equipped-computer-lab.webp",
+      title: "Business Services",
+      description: "Comprehensive business consulting services including strategic planning, funding solutions, and business optimization. We help entrepreneurs and companies streamline operations and scale effectively.",
+      link: "/services/business-services",
+      alt: "Business Services",
+      delay: "300"
+    },
+    {
+      image: "/assets/img/services/businessman-signing-important-contract-papers.jpg",
+      title: "Credit Repair & Legal Support",
+      description: "Expert credit repair and legal support services backed by a 100% correct filing guarantee. We help restore your financial reputation and seek compensation for consumer rights violations.",
+      link: "/services/legal-services",
+      alt: "Legal Services",
+      delay: "400"
+    }
+  ];
+
+  const titleContent = (
+    <h2 className="section-title gradient-text">
+      Our Digital Marketing & AI Services for Business Growth
+    </h2>
+  );
+
+  const serviceCardContent = (card: typeof service_cards_data[0], index: number) => (
+    <div className="service-card" data-aos="fade-up" data-aos-delay={card.delay}>
+      <div className="service-card-image">
+        <div className="service-card-image-glow"></div>
+        <img 
+          src={card.image} 
+          className="img-fluid" 
+          alt={card.alt} 
+          title={`${card.title} - Everything AI Service`}
+          data-aos="zoom-in" 
+          data-aos-delay="300"
+        />
+      </div>
+      <h3 className="service-card-title" data-aos="fade-up" data-aos-delay="400">{card.title}</h3>
+      <p className="service-card-description" data-aos="fade-up" data-aos-delay="500">
+        {card.description}
+      </p>
+      <Link href={card.link} className="service-card-link" data-aos="fade-up" data-aos-delay="600">
+        Read More <i className="ti-arrow-top-right"></i>
+      </Link>
+    </div>
+  );
+
+  return (
+    <section className="futuristic-services section-padding" data-aos="fade-up">
+      <div className="services-bg-pattern"></div>
+      <div className="services-glow"></div>
+      
+      <div className="container position-relative z-index-1">
+        <div className="row align-items-center">
+          <div className="col-lg-6 col-sm-6 col-xs-12">
+            <div className="section-title" data-aos="fade-right" data-aos-delay="200">
+              <div className="section-tag" data-aos="fade-up" data-aos-delay="300">Our Services</div>
+              
+              {isJSEnabled ? (
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  {titleContent}
+                </motion.div>
+              ) : (
+                titleContent
+              )}
+            </div>
+          </div>
+          <div className="col-lg-6 col-sm-6 col-xs-12">
+            <div className="text-end" data-aos="fade-left" data-aos-delay="500">
+              {isJSEnabled ? (
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <Link href="/services" className="cta-button services-cta">
+                    Explore All Services <i className="ti-arrow-top-right"></i>
+                  </Link>
+                </motion.div>
+              ) : (
+                <Link href="/services" className="cta-button services-cta">
+                  Explore All Services <i className="ti-arrow-top-right"></i>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        {/* Service cards with original layout */}
+        <div className="row service-cards-container">
+          {service_cards_data.map((card, index) => (
+            <div key={index} className="col-lg-4 col-sm-4 col-xs-12">
+              {isJSEnabled ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: parseFloat(card.delay) / 1000 }}
+                  viewport={{ once: true }}
+                >
+                  {serviceCardContent(card, index)}
+                </motion.div>
+              ) : (
+                serviceCardContent(card, index)
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Hero Component
+const Hero = () => {
+  return (
+    <section 
+      className="futuristic-hero hero-bg-image"
+    >
+      <div className="hero-overlay"></div>
+      <div className="hero-bg-pattern"></div>
+      <div className="hero-glow"></div>
+      
+      <div className="container position-relative z-10">
+        <div className="row">
+          <div className="col-lg-7 col-md-9 col-sm-12">
+            <div className="hero-content">
+              <motion.h1 
+                className="hero-title"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <span className="gradient-text">
+                  Digital Marketing & AI Solutions
+                </span> to Grow Your Business Online
+              </motion.h1>
+              
+              <motion.p 
+                className="hero-subtitle"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Leading digital marketing agency specializing in AI solutions for business, SEO services near me, website development company services, and business automation tools. We help businesses increase online visibility, attract more customers, and achieve sustainable growth with expert strategies and innovative technology.
+              </motion.p>
+              
+              <motion.div 
+                className="hero-actions"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <Link href="#contact" className="cta-button hero-cta">
+                  Get Started Today
+                  <span className="btn-icon">
+                    <i className="ti-arrow-top-right"></i>
+                  </span>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="hero-graphic">
+        <div className="floating-item item-1"></div>
+        <div className="floating-item item-2"></div>
+        <div className="floating-item item-3"></div>
+        <div className="hero-dots"></div>
+      </div>
+    </section>
+  );
+};
+
+// Header Component
+const Header = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+      <div className="topbar">
+        <div className="container mx-auto">
+          <div className="topbar-wrapper">
+            <div className="topbar-contact">
+              <div className="contact-item">
+                <span className="contact-icon">
+                  <Image
+                    src="/assets/img/phone.svg"
+                    alt="Phone"
+                    width={16}
+                    height={16}
+                  />
+                </span>
+                <a href="tel:+1(973)265-0273">+1 (973) 265-0273</a>
+              </div>
+              <div className="contact-item">
+                <span className="contact-icon">
+                  <Image
+                    src="/assets/img/email.svg"
+                    alt="Email"
+                    width={16}
+                    height={16}
+                  />
+                </span>
+                <a href="mailto:info@everythingainow.com">info@everythingainow.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav className="navbar navbar-expand-lg">
+        <div className="container">
+          <Link className="navbar-brand" href="/">
+            <Image
+              src="/assets/img/logo-top.png"
+              alt="Everything AI Logo"
+              title="Everything AI - AI Services and Solutions Logo"
+              width={200}
+              height={60}
+              className="img-fluid logo-max-height"
+            />
+          </Link>
+
+          <div className="navbar-nav ms-auto">
+            <Link href="#home" className="nav-link">Home</Link>
+            <Link href="#services" className="nav-link">Services</Link>
+            <Link href="#contact" className="nav-link">Contact</Link>
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+// Footer Component
+const Footer = () => {
+  return (
+    <footer className="footer-section footer-section-bg">
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <div className="footer-widget">
+              <div className="footer-logo mb-4">
+                <Link href="/">
+                  <Image
+                    src="/assets/img/logo-top.png"
+                    alt="Everything AI Logo"
+                    title="Everything AI - AI Services and Solutions Logo"
+                    width={200}
+                    height={60}
+                    className="img-fluid logo-max-height"
+                  />
+                </Link>
+              </div>
+              <p className="footer-desc text-light opacity-75 mb-4">
+                Empowering businesses with AI-powered solutions for
+                automation, growth, and innovation.
+              </p>
+              <div className="footer-contact">
+                <div className="contact-item d-flex align-items-center mb-2">
+                  <i className="ti-email me-2 text-primary"></i>
+                  <Link
+                    href="mailto:info@everythingainow.com"
+                    className="text-light"
+                  >
+                    info@everythingainow.com
+                  </Link>
+                </div>
+                <div className="contact-item d-flex align-items-center">
+                  <i className="ti-headphone-alt me-2 text-primary"></i>
+                  <Link href="tel:(973) 265-0273" className="text-light">
+                    +1 (973) 265-0273
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-2 col-md-6 mb-4 mb-lg-0">
+            <div className="footer-widget">
+              <h4 className="widget-title position-relative mb-4">Company</h4>
+              <ul className="footer-links list-unstyled">
+                <li className="mb-2">
+                  <Link
+                    href="/about"
+                    className="text-light opacity-75 hover-effect"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services"
+                    className="text-light opacity-75 hover-effect"
+                  >
+                    Services
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/contact"
+                    className="text-light opacity-75 hover-effect"
+                  >
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
+            <div className="footer-widget">
+              <h4 className="widget-title position-relative mb-4">Services</h4>
+              <ul className="footer-links list-unstyled">
+                <li className="mb-2">
+                  <Link
+                    href="/services/website-design-development"
+                    className="text-light opacity-75 hover-effect"
+                  >
+                    Website Development
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services/business-services"
+                    className="text-light opacity-75 hover-effect"
+                  >
+                    Business Services
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services/legal-services"
+                    className="text-light opacity-75 hover-effect"
+                  >
+                    Legal Services
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6">
+            <div className="footer-widget">
+              <h4 className="widget-title position-relative mb-4">Follow Us</h4>
+              <div className="social-links d-flex gap-3">
+                <a href="#" className="social-link" title="Follow us on Facebook" aria-label="Follow us on Facebook">
+                  <i className="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" className="social-link" title="Follow us on LinkedIn" aria-label="Follow us on LinkedIn">
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" className="social-link" title="Follow us on Instagram" aria-label="Follow us on Instagram">
+                  <i className="fab fa-instagram"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom border-top border-secondary pt-4 mt-5">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <p className="copyright-text text-light opacity-75 mb-0">
+                © 2025 Everything AI, LLC. All rights reserved.
+              </p>
+            </div>
+            <div className="col-md-6 text-md-end">
+              <div className="footer-links">
+                <Link href="/privacy-policy" className="text-light opacity-75 me-3">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className="text-light opacity-75">
+                  Terms of Service
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// Main Landing Page Component
+const StandaloneLandingPage = () => {
+  return (
+    <div id="home">
+      <Header />
+      <Hero />
+      <div id="services">
+        <Services />
+      </div>
+      <div id="contact">
+        <ContactForm />
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default StandaloneLandingPage;
