@@ -56,8 +56,8 @@ const ContactForm = () => {
             of inquiry
           </h2>
         </div>
-        <div className="row">
-          <div className="offset-lg-1 col-lg-10 col-sm-12 col-xs-12">
+        <div className="row justify-content-center">
+          <div className="col-lg-10 col-md-12 col-sm-12 col-xs-12">
             {responseMessage && (
               <div
                 className={`alert ${
@@ -70,7 +70,7 @@ const ContactForm = () => {
             <div className="contact p-5 rounded-4 shadow-sm contact-form-bg">
               <form className="form" onSubmit={handleSubmit}>
                 <div className="row g-4">
-                  <div className="form-group col-md-6">
+                  <div className="form-group col-lg-6 col-md-6 col-sm-12">
                     <label htmlFor="name" className="form-label fw-bold text-white">Name</label>
                     <input
                       type="text"
@@ -82,7 +82,7 @@ const ContactForm = () => {
                       required
                     />
                   </div>
-                  <div className="form-group col-md-6">
+                  <div className="form-group col-lg-6 col-md-6 col-sm-12">
                     <label htmlFor="email" className="form-label fw-bold text-white">Your Email</label>
                     <input
                       type="email"
@@ -108,7 +108,7 @@ const ContactForm = () => {
                   <div className="form-group col-md-12">
                     <label htmlFor="message" className="form-label fw-bold text-white">Your Message</label>
                     <textarea
-                      rows={6}
+                      rows={5}
                       id="message"
                       name="message"
                       className="form-control form-control-lg textarea-custom"
