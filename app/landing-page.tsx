@@ -440,26 +440,25 @@ const Footer = () => {
     <footer className="footer-section footer-section-bg">
       <div className="container">
         <div className="row">
-          <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
-            <div className="footer-widget text-center">
+          <div className="col-lg-3 col-md-3 col-sm-6 mb-4 mb-lg-0">
+            <div className="footer-widget">
               <div className="footer-logo mb-4">
                 <Link href="/">
                   <Image
                     src="/assets/img/logo-top.png"
                     alt="Everything AI Logo"
                     title="Everything AI - AI Services and Solutions Logo"
-                    width={250}
-                    height={75}
+                    width={200}
+                    height={60}
                     className="img-fluid footer-logo-image"
                   />
                 </Link>
               </div>
-              <p className="footer-desc text-light opacity-75 mb-4">
-                Empowering businesses with AI-powered solutions for
-                automation, growth, and innovation.
+              <p className="footer-desc text-light mb-4">
+                Empowering businesses with AI-powered solutions for automation, growth, and innovation.
               </p>
               <div className="footer-contact">
-                <div className="contact-item d-flex align-items-center justify-content-center mb-2">
+                <div className="contact-item d-flex align-items-center mb-2">
                   <span className="contact-icon me-2">
                     <Image
                       src="/assets/img/mail.svg"
@@ -475,7 +474,7 @@ const Footer = () => {
                     info@everythingainow.com
                   </Link>
                 </div>
-                <div className="contact-item d-flex align-items-center justify-content-center">
+                <div className="contact-item d-flex align-items-center mb-2">
                   <span className="contact-icon me-2">
                     <Image
                       src="/assets/img/phone.svg"
@@ -488,7 +487,7 @@ const Footer = () => {
                     +1 (866) 357-5662
                   </Link>
                 </div>
-                <div className="contact-item d-flex align-items-center justify-content-center mt-2">
+                <div className="contact-item d-flex align-items-center">
                   <span className="contact-icon me-2">
                     <Image
                       src="/assets/img/phone.svg"
@@ -505,14 +504,14 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-lg-2 col-md-6 mb-4 mb-lg-0">
+          <div className="col-lg-3 col-md-3 col-sm-6 mb-4 mb-lg-0">
             <div className="footer-widget">
               <h4 className="widget-title position-relative mb-4">Company</h4>
               <ul className="footer-links list-unstyled">
                 <li className="mb-2">
                   <Link
                     href="/about"
-                    className="text-light opacity-75 hover-effect"
+                    className="text-light hover-effect"
                   >
                     About Us
                   </Link>
@@ -520,69 +519,124 @@ const Footer = () => {
                 <li className="mb-2">
                   <Link
                     href="/services"
-                    className="text-light opacity-75 hover-effect"
+                    className="text-light hover-effect"
                   >
                     Services
                   </Link>
                 </li>
                 <li className="mb-2">
                   <Link
-                    href="/contact"
-                    className="text-light opacity-75 hover-effect"
+                    href="/faqs"
+                    className="text-light hover-effect"
                   >
-                    Contact
+                    FAQs
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/contact"
+                    className="text-light hover-effect"
+                  >
+                    Contact Support
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/partner"
+                    className="text-light hover-effect"
+                  >
+                    Become our Partner
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/referral"
+                    className="text-light hover-effect"
+                  >
+                    Referral Program
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
+          <div className="col-lg-3 col-md-3 col-sm-6 mb-4 mb-lg-0">
             <div className="footer-widget">
               <h4 className="widget-title position-relative mb-4">Services</h4>
               <ul className="footer-links list-unstyled">
                 <li className="mb-2">
                   <Link
-                    href="/services/website-design-development"
-                    className="text-light opacity-75 hover-effect"
+                    href="/services/digital-marketing"
+                    className="text-light hover-effect"
                   >
-                    Website Development
+                    Digital Marketing
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services/website-design-development"
+                    className="text-light hover-effect"
+                  >
+                    Website Design & Development
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services/reputation-management"
+                    className="text-light hover-effect"
+                  >
+                    Reputation & Review Management
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services/crm-development"
+                    className="text-light hover-effect"
+                  >
+                    Custom CRM Development
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-3 col-sm-6">
+            <div className="footer-widget">
+              <h4 className="widget-title position-relative mb-4">Solutions</h4>
+              <ul className="footer-links list-unstyled">
+                <li className="mb-2">
+                  <Link
+                    href="/services/legal-services"
+                    className="text-light hover-effect"
+                  >
+                    Credit Repair & Legal Support
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link
+                    href="/services/booking-appointments"
+                    className="text-light hover-effect"
+                  >
+                    Calendar Bookings & Appointments
                   </Link>
                 </li>
                 <li className="mb-2">
                   <Link
                     href="/services/business-services"
-                    className="text-light opacity-75 hover-effect"
+                    className="text-light hover-effect"
                   >
                     Business Services
                   </Link>
                 </li>
                 <li className="mb-2">
                   <Link
-                    href="/services/legal-services"
-                    className="text-light opacity-75 hover-effect"
+                    href="/services/ai-solutions"
+                    className="text-light hover-effect"
                   >
-                    Legal Services
+                    AI Solutions
                   </Link>
                 </li>
               </ul>
-            </div>
-          </div>
-
-          <div className="col-lg-3 col-md-6">
-            <div className="footer-widget">
-              <h4 className="widget-title position-relative mb-4">Follow Us</h4>
-              <div className="social-links d-flex gap-3">
-                <a href="#" className="social-link" title="Follow us on Facebook" aria-label="Follow us on Facebook">
-                  <i className="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" className="social-link" title="Follow us on LinkedIn" aria-label="Follow us on LinkedIn">
-                  <i className="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" className="social-link" title="Follow us on Instagram" aria-label="Follow us on Instagram">
-                  <i className="fab fa-instagram"></i>
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -590,18 +644,37 @@ const Footer = () => {
         <div className="footer-bottom border-top border-secondary pt-4 mt-5">
           <div className="row align-items-center">
             <div className="col-md-6">
-              <p className="copyright-text text-light opacity-75 mb-0">
-                © 2025 Everything AI, LLC. All rights reserved.
+              <p className="copyright-text text-light mb-0">
+                © 2025 Everything AI. All Rights Reserved.
               </p>
             </div>
-            <div className="col-md-6 text-md-end">
-              <div className="footer-links">
-                <Link href="/privacy-policy" className="text-light opacity-75 me-3">
-                  Privacy Policy
-                </Link>
-                <Link href="/terms" className="text-light opacity-75">
-                  Terms of Service
-                </Link>
+            <div className="col-md-6">
+              <div className="footer-bottom-right d-flex align-items-center justify-content-md-end gap-4">
+                <div className="social-links d-flex gap-3">
+                  <a href="#" className="social-link" title="Follow us on Facebook" aria-label="Follow us on Facebook">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" className="social-link" title="Follow us on Twitter" aria-label="Follow us on Twitter">
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" className="social-link" title="Follow us on Instagram" aria-label="Follow us on Instagram">
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                  <a href="#" className="social-link" title="Follow us on LinkedIn" aria-label="Follow us on LinkedIn">
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+                <div className="footer-links d-flex gap-3">
+                  <Link href="/terms" className="text-light">
+                    Terms
+                  </Link>
+                  <Link href="/privacy" className="text-light">
+                    Privacy
+                  </Link>
+                  <Link href="/admin" className="text-light">
+                    Admin
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

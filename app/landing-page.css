@@ -711,6 +711,17 @@ h1, h2, h3, h4, h5, h6 {
   padding: 4rem 0 2rem;
 }
 
+.footer-section .row {
+  flex-wrap: nowrap;
+}
+
+@media (min-width: 768px) {
+  .footer-section .col-lg-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
 .footer-widget {
   margin-bottom: 2rem;
 }
@@ -746,11 +757,14 @@ h1, h2, h3, h4, h5, h6 {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: color 0.3s ease;
+  font-size: 14px;
+  opacity: 0.75;
 }
 
 .footer-links a:hover,
 .hover-effect:hover {
   color: #18fef5;
+  opacity: 1;
 }
 
 .contact-item {
@@ -1167,13 +1181,28 @@ html {
 }
 
 .footer-contact .contact-item a {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-contact .contact-item a:hover {
   color: #18fef5;
+}
+
+.footer-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4rem 0 2rem;
+}
+
+.footer-widget {
+  margin-bottom: 2rem;
+}
+
+.footer-desc {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
 .hero-bg-image {
