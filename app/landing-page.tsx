@@ -4,6 +4,185 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+// Testimonials Component
+const testimonial_data = [
+  {
+    name: `Liam Brown`,
+    description: `Partnering with Everything AI was the best decision we made. Their insights into AI-driven marketing strategies boosted our campaign results beyond expectations.`,
+    role: "Marketing Director"
+  },
+  {
+    name: `Olivia Davis`,
+    description: `From personalized AI solutions to exceptional customer service, Everything AI delivers on every front. They're not just a service provider; they're a true partner.`,
+    role: "CTO"
+  },
+  {
+    name: `Emma Wilson`,
+    description: `The team at Everything AI is phenomenal. They took our vision and applied cutting-edge AI solutions to help us achieve a 30% increase in efficiency. Their support is unparalleled.`,
+    role: "Operations Manager"
+  },
+  {
+    name: `Ethan Smith`,
+    description: `As a startup, adopting AI seemed daunting, but Everything AI made the transition seamless. Their team's expertise and dedication were evident in every step of the process.`,
+    role: "Startup Founder"
+  },
+  {
+    name: `Sophia Johnson`,
+    description: `Everything AI completely transformed the way we handle data analysis. Their innovative solutions streamlined our processes, enabling faster and smarter decision-making. Highly recommend their services!`,
+    role: "Data Scientist"
+  },
+  {
+    name: `Noah Martinez`,
+    description: `Everything AI's solutions empowered us to innovate at scale. Their expertise helped us unlock new opportunities and achieve significant cost savings.`,
+    role: "Innovation Lead"
+  },
+];
+
+const Testimonials = () => {
+  const [isJSEnabled, setIsJSEnabled] = useState(false);
+
+  useEffect(() => {
+    setIsJSEnabled(true);
+  }, []);
+
+  // Title content that renders on both server and client
+  const titleContent = (
+    <>
+      <div className="section-tag">Testimonials</div>
+      <h2 className="section-title gradient-text">
+        What Our Clients Say About Us
+      </h2>
+    </>
+  );
+
+  // Testimonial card content function
+  const testimonialCard = (item: typeof testimonial_data[0], index: number, isInSlider = false) => (
+    <div className="testimonial-card">
+      <div className="testimonial-quote">
+        <img 
+          src="/assets/img/quote.png" 
+          alt="Quote" 
+          title="Quote - Everything AI Testimonial" 
+          className="quote-icon"
+        />
+      </div>
+      <div className="testimonial-content">
+        <div className="testimonial-rating">
+          <span className="testimonial-star">★</span>
+          <span className="testimonial-star">★</span>
+          <span className="testimonial-star">★</span>
+          <span className="testimonial-star">★</span>
+          <span className="testimonial-star">★</span>
+        </div>
+        <p className="testimonial-text">{item.description}</p>
+        <div className="testimonial-author">
+          <div className="author-info">
+            <h5 className="author-name">{item.name}</h5>
+            <span className="author-role">{item.role}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <section className="futuristic-testimonials section-padding">
+      <div className="testimonial-bg-pattern"></div>
+      <div className="testimonial-glow"></div>
+      
+      <div className="container position-relative z-index-1">
+        <div className="section-header text-center">
+          {/* Conditionally animated title */}
+          {isJSEnabled ? (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              {titleContent}
+            </motion.div>
+          ) : (
+            titleContent
+          )}
+        </div>
+        
+        <div className="row">
+          <div className="col-lg-12">
+            {/* Interactive Slider for JavaScript-enabled browsers */}
+            {isJSEnabled ? (
+              <motion.div 
+                className="testimonial-slider-wrapper"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  slidesPerView={2}
+                  spaceBetween={30}
+                  pagination={{ clickable: true }}
+                  autoplay={{ delay: 8000 }}
+                  loop={true}
+                  breakpoints={{
+                    0: {
+                      slidesPerView: 1,
+                      spaceBetween: 20,
+                    },
+                    768: {
+                      slidesPerView: 1,
+                      spaceBetween: 20,
+                    },
+                    992: {
+                      slidesPerView: 2,
+                      spaceBetween: 20,
+                    },
+                    1400: {
+                      slidesPerView: 2,
+                      spaceBetween: 30,
+                    },
+                  }}
+                  className="testimonial-slider"
+                >
+                  {testimonial_data.map((item, i) => (
+                    <SwiperSlide key={i}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        {testimonialCard(item, i, true)}
+                      </motion.div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </motion.div>
+            ) : (
+              /* Static grid for no-JavaScript - EXACTLY 2 cards like original */
+              <div className="testimonials-static-content">
+                <div className="row">
+                  {testimonial_data.slice(0, 2).map((item, i) => (
+                    <div key={i} className="col-lg-6 col-md-6 mb-4">
+                      {testimonialCard(item, i, false)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // Contact Form Component
 const ContactForm = () => {
@@ -692,6 +871,9 @@ const StandaloneLandingPage = () => {
       <Hero />
       <div id="services">
         <Services />
+      </div>
+      <div id="testimonials">
+        <Testimonials />
       </div>
       <div id="contact">
         <ContactForm />
