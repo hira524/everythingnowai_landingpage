@@ -566,9 +566,9 @@ const Hero = () => {
       <div className="hero-bg-pattern"></div>
       <div className="hero-glow"></div>
       
-      <div className="container position-relative z-10">
-        <div className="row align-items-center">
-          <div className="col-lg-6 col-md-9 col-sm-12">
+      <div className="container position-relative z-10 hero-container">
+        <div className="row align-items-center hero-row">
+          <div className="col-lg-12 col-md-12 col-sm-12 hero-col">
             <div className="hero-content">
               
               

@@ -23,7 +23,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   color: #ffffff;
   background: #0a0a1a;
@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 2rem;
@@ -357,10 +357,51 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
 }
 
+/* Hero Section Specific Overrides */
+.futuristic-hero .container {
+  margin-left: 0;
+  padding-left: 20px;
+  max-width: 100%;
+}
+
+.futuristic-hero .row {
+  margin-left: 0;
+}
+
+.futuristic-hero .col-lg-6 {
+  padding-left: 0;
+  max-width: 100%;
+  flex: 0 0 100%;
+}
+
+.futuristic-hero .col-lg-12 {
+  padding-left: 0;
+  max-width: 100%;
+  flex: 0 0 100%;
+}
+
+.hero-container {
+  margin-left: 0 !important;
+  padding-left: 20px !important;
+  max-width: 100% !important;
+}
+
+.hero-row {
+  margin-left: 0 !important;
+}
+
+.hero-col {
+  padding-left: 0 !important;
+  max-width: 100% !important;
+}
+
 .hero-content {
   z-index: 2;
   position: relative;
   text-align: left;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 /* Hero Badge */
@@ -398,11 +439,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 2rem;
   color: #ffffff;
+  text-align: left !important;
+  width: 100%;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  position: relative;
+  left: 0;
 }
 
 .hero-title-line {
@@ -411,11 +458,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 3rem;
   max-width: 600px;
+  text-align: left !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  position: relative;
+  left: 0;
 }
 
 .hero-actions {
@@ -423,6 +475,10 @@ h1, h2, h3, h4, h5, h6 {
   gap: 1rem;
   align-items: center;
   margin-bottom: 4rem;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
 
 .hero-cta {
@@ -792,7 +848,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-card-title {
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.5rem;
@@ -807,7 +863,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 2.5rem;
   z-index: 2;
   position: relative;
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 .service-card-link {
@@ -1137,11 +1193,11 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .hero-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
   
   .section-title {
-    font-size: 2.25rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -1160,11 +1216,11 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .hero-title {
-    font-size: 3rem;
+    font-size: 2.2rem;
   }
   
   .section-title {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   
   .service-cards-container .col-lg-4 {
@@ -1195,15 +1251,17 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    text-align: left;
   }
   
   .hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    text-align: left;
   }
   
   .section-title {
-    font-size: 1.75rem;
+    font-size: 1.4rem;
   }
   
   .service-card {
@@ -1246,15 +1304,17 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    text-align: left;
   }
   
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    text-align: left;
   }
   
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   
   .service-card {
@@ -1262,7 +1322,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .service-card-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
   
   .topbar {
@@ -1549,7 +1609,7 @@ html {
 
 /* Section Title */
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 2rem;
   line-height: 1.3;
@@ -1669,7 +1729,7 @@ html {
 .testimonial-text {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-bottom: 2rem;
   font-style: italic;
 }
@@ -1704,7 +1764,7 @@ html {
 
 .author-name {
   color: #ffffff;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
