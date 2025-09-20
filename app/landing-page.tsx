@@ -64,29 +64,47 @@ const Testimonials = () => {
   // Testimonial card content function
   const testimonialCard = (item: typeof testimonial_data[0], index: number, isInSlider = false) => (
     <div className="testimonial-card">
-      <div className="testimonial-quote">
-        <img 
-          src="/assets/img/quote.png" 
-          alt="Quote" 
-          title="Quote - Everything AI Testimonial" 
-          className="quote-icon"
-        />
+      <div className="testimonial-header">
+        <div className="testimonial-quote">
+          <img 
+            src="/assets/img/quote.png" 
+            alt="Quote" 
+            title="Quote - Everything AI Testimonial" 
+            className="quote-icon"
+          />
+        </div>
+        <div className="testimonial-rating">
+          {[...Array(5)].map((_, i) => (
+            <motion.span 
+              key={i}
+              className="testimonial-star"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: i * 0.1 }}
+            >
+              ★
+            </motion.span>
+          ))}
+        </div>
       </div>
       <div className="testimonial-content">
-        <div className="testimonial-rating">
-          <span className="testimonial-star">★</span>
-          <span className="testimonial-star">★</span>
-          <span className="testimonial-star">★</span>
-          <span className="testimonial-star">★</span>
-          <span className="testimonial-star">★</span>
-        </div>
         <p className="testimonial-text">{item.description}</p>
         <div className="testimonial-author">
+          <div className="author-avatar">
+            <div className="avatar-placeholder">
+              {item.name.split(' ').map(n => n[0]).join('')}
+            </div>
+          </div>
           <div className="author-info">
             <h5 className="author-name">{item.name}</h5>
             <span className="author-role">{item.role}</span>
           </div>
         </div>
+      </div>
+      <div className="testimonial-decoration">
+        <div className="decoration-dot"></div>
+        <div className="decoration-dot"></div>
+        <div className="decoration-dot"></div>
       </div>
     </div>
   );
@@ -378,28 +396,31 @@ const Services = () => {
 
   const service_cards_data = [
     {
-      image: "/assets/img/8.png",
+      image: "/assets/img/services/webdev.png",
       title: "Website Design & Development",
       description: "Custom website design and development services that create stunning, high-performance websites. We focus on user experience, mobile responsiveness, and conversion optimization.",
       link: "/services/website-design-development",
       alt: "Website Design & Development",
-      delay: "200"
+      delay: "200",
+      featured: true
     },
     {
-      image: "/assets/img/services/modern-equipped-computer-lab.webp",
+      image: "/assets/img/services/analytics.png",
       title: "Business Services",
       description: "Comprehensive business consulting services including strategic planning, funding solutions, and business optimization. We help entrepreneurs and companies streamline operations and scale effectively.",
       link: "/services/business-services",
       alt: "Business Services",
-      delay: "300"
+      delay: "300",
+      featured: false
     },
     {
-      image: "/assets/img/services/businessman-signing-important-contract-papers.jpg",
+      image: "/assets/img/services/crm.webp",
       title: "Credit Repair & Legal Support",
       description: "Expert credit repair and legal support services backed by a 100% correct filing guarantee. We help restore your financial reputation and seek compensation for consumer rights violations.",
       link: "/services/legal-services",
       alt: "Legal Services",
-      delay: "400"
+      delay: "400",
+      featured: false
     }
   ];
 
@@ -410,9 +431,10 @@ const Services = () => {
   );
 
   const serviceCardContent = (card: typeof service_cards_data[0], index: number) => (
-    <div className="service-card" data-aos="fade-up" data-aos-delay={card.delay}>
+    <div className={`service-card ${card.featured ? 'service-card-featured' : ''}`} data-aos="fade-up" data-aos-delay={card.delay}>
       <div className="service-card-image">
         <div className="service-card-image-glow"></div>
+        <div className="service-card-image-overlay"></div>
         <img 
           src={card.image} 
           className="img-fluid" 
@@ -421,14 +443,22 @@ const Services = () => {
           data-aos="zoom-in" 
           data-aos-delay="300"
         />
+        <div className="service-card-badge">
+          <span className="service-index">0{index + 1}</span>
+        </div>
       </div>
-      <h3 className="service-card-title" data-aos="fade-up" data-aos-delay="400">{card.title}</h3>
-      <p className="service-card-description" data-aos="fade-up" data-aos-delay="500">
-        {card.description}
-      </p>
-      <Link href={card.link} className="service-card-link" data-aos="fade-up" data-aos-delay="600">
-        Read More <i className="ti-arrow-top-right"></i>
-      </Link>
+      <div className="service-card-content">
+        <h3 className="service-card-title" data-aos="fade-up" data-aos-delay="400">{card.title}</h3>
+        <p className="service-card-description" data-aos="fade-up" data-aos-delay="500">
+          {card.description}
+        </p>
+        <Link href={card.link} className="service-card-link" data-aos="fade-up" data-aos-delay="600">
+          <span>Explore Service</span>
+          <div className="service-link-icon">
+            <i className="ti-arrow-top-right"></i>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 
@@ -479,24 +509,47 @@ const Services = () => {
           </div>
         </div>
         
-        {/* Service cards with original layout */}
-        <div className="row service-cards-container">
-          {service_cards_data.map((card, index) => (
-            <div key={index} className="col-lg-4 col-sm-4 col-xs-12">
+        {/* Modern asymmetric service cards layout */}
+        <div className="service-cards-modern-container">
+          <div className="row">
+            {/* Featured service card - larger */}
+            <div className="col-lg-6 col-md-12">
               {isJSEnabled ? (
                 <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: parseFloat(card.delay) / 1000 }}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
                   viewport={{ once: true }}
                 >
-                  {serviceCardContent(card, index)}
+                  {serviceCardContent(service_cards_data[0], 0)}
                 </motion.div>
               ) : (
-                serviceCardContent(card, index)
+                serviceCardContent(service_cards_data[0], 0)
               )}
             </div>
-          ))}
+            
+            {/* Stacked smaller cards */}
+            <div className="col-lg-6 col-md-12">
+              <div className="service-cards-stack">
+                {service_cards_data.slice(1).map((card, index) => (
+                  <div key={index + 1} className="service-card-stack-item">
+                    {isJSEnabled ? (
+                      <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 + (index * 0.2) }}
+                        viewport={{ once: true }}
+                      >
+                        {serviceCardContent(card, index + 1)}
+                      </motion.div>
+                    ) : (
+                      serviceCardContent(card, index + 1)
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -514,25 +567,33 @@ const Hero = () => {
       <div className="hero-glow"></div>
       
       <div className="container position-relative z-10">
-        <div className="row">
-          <div className="col-lg-7 col-md-9 col-sm-12">
+        <div className="row align-items-center">
+          <div className="col-lg-6 col-md-9 col-sm-12">
             <div className="hero-content">
+              
+              
               <motion.h1 
                 className="hero-title"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <span className="gradient-text">
-                  Digital Marketing & AI Solutions
-                </span> to Grow Your Business Online
+                <span className="hero-title-line">
+                  <span className="gradient-text">Digital Marketing</span>
+                </span>
+                <span className="hero-title-line">
+                  <span className="gradient-text">& AI Solutions</span>
+                </span>
+                <span className="hero-title-line">
+                  to Grow Your Business Online
+                </span>
               </motion.h1>
               
               <motion.p 
                 className="hero-subtitle"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
               >
                 Leading digital marketing agency specializing in AI solutions for business, SEO services near me, website development company services, and business automation tools. We help businesses increase online visibility, attract more customers, and achieve sustainable growth with expert strategies and innovative technology.
               </motion.p>
@@ -541,16 +602,33 @@ const Hero = () => {
                 className="hero-actions"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
               >
-                <Link href="#contact" className="cta-button hero-cta">
-                  Get Started Today
-                  <span className="btn-icon">
+                <Link href="#contact" className="cta-button hero-cta primary">
+                  <span>Get Started Today</span>
+                  <div className="btn-icon">
                     <i className="ti-arrow-top-right"></i>
-                  </span>
+                  </div>
+                </Link>
+                <Link href="#services" className="cta-button hero-cta secondary">
+                  <span>Explore Services</span>
+                  <div className="btn-icon">
+                    <i className="ti-arrow-down"></i>
+                  </div>
                 </Link>
               </motion.div>
             </div>
+          </div>
+          
+          <div className="col-lg-6 col-md-3 col-sm-12">
+            <motion.div
+              className="hero-visual"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              
+            </motion.div>
           </div>
         </div>
       </div>
@@ -559,7 +637,10 @@ const Hero = () => {
         <div className="floating-item item-1"></div>
         <div className="floating-item item-2"></div>
         <div className="floating-item item-3"></div>
+        <div className="floating-item item-4"></div>
+        <div className="floating-item item-5"></div>
         <div className="hero-dots"></div>
+        <div className="hero-grid"></div>
       </div>
     </section>
   );
