@@ -416,7 +416,7 @@ const Header = () => {
               <div className="contact-item">
                 <span className="contact-icon">
                   <Image
-                    src="/assets/img/email.svg"
+                    src="/assets/img/mail.svg"
                     alt="Email"
                     width={16}
                     height={16}
@@ -429,26 +429,7 @@ const Header = () => {
         </div>
       </div>
 
-      <nav className="navbar navbar-expand-lg">
-        <div className="container">
-          <Link className="navbar-brand" href="/">
-            <Image
-              src="/assets/img/logo-top.png"
-              alt="Everything AI Logo"
-              title="Everything AI - AI Services and Solutions Logo"
-              width={200}
-              height={60}
-              className="img-fluid logo-max-height"
-            />
-          </Link>
 
-          <div className="navbar-nav ms-auto">
-            <Link href="#home" className="nav-link">Home</Link>
-            <Link href="#services" className="nav-link">Services</Link>
-            <Link href="#contact" className="nav-link">Contact</Link>
-          </div>
-        </div>
-      </nav>
     </header>
   );
 };
@@ -460,16 +441,16 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
-            <div className="footer-widget">
+            <div className="footer-widget text-center">
               <div className="footer-logo mb-4">
                 <Link href="/">
                   <Image
                     src="/assets/img/logo-top.png"
                     alt="Everything AI Logo"
                     title="Everything AI - AI Services and Solutions Logo"
-                    width={200}
-                    height={60}
-                    className="img-fluid logo-max-height"
+                    width={250}
+                    height={75}
+                    className="img-fluid footer-logo-image"
                   />
                 </Link>
               </div>
@@ -478,8 +459,15 @@ const Footer = () => {
                 automation, growth, and innovation.
               </p>
               <div className="footer-contact">
-                <div className="contact-item d-flex align-items-center mb-2">
-                  <i className="ti-email me-2 text-primary"></i>
+                <div className="contact-item d-flex align-items-center justify-content-center mb-2">
+                  <span className="contact-icon me-2">
+                    <Image
+                      src="/assets/img/mail.svg"
+                      alt="Email"
+                      width={14}
+                      height={14}
+                    />
+                  </span>
                   <Link
                     href="mailto:info@everythingainow.com"
                     className="text-light"
@@ -487,9 +475,29 @@ const Footer = () => {
                     info@everythingainow.com
                   </Link>
                 </div>
-                <div className="contact-item d-flex align-items-center">
-                  <i className="ti-headphone-alt me-2 text-primary"></i>
-                  <Link href="tel:(973) 265-0273" className="text-light">
+                <div className="contact-item d-flex align-items-center justify-content-center">
+                  <span className="contact-icon me-2">
+                    <Image
+                      src="/assets/img/phone.svg"
+                      alt="Phone"
+                      width={14}
+                      height={14}
+                    />
+                  </span>
+                  <Link href="tel:+1(866)357-5662" className="text-light">
+                    +1 (866) 357-5662
+                  </Link>
+                </div>
+                <div className="contact-item d-flex align-items-center justify-content-center mt-2">
+                  <span className="contact-icon me-2">
+                    <Image
+                      src="/assets/img/phone.svg"
+                      alt="Phone"
+                      width={14}
+                      height={14}
+                    />
+                  </span>
+                  <Link href="tel:+1(973)265-0273" className="text-light">
                     +1 (973) 265-0273
                   </Link>
                 </div>
