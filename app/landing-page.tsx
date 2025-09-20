@@ -6,9 +6,46 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
+interface DataType {
+  id: number;
+  title: string;
+  link: string;
+  has_dropdown: boolean;
+  sub_menus?: { title: string; link: string }[];
+}
+
+const menu_data: DataType[] = [
+  { id: 1, title: "Home", link: "/", has_dropdown: false },
+  { id: 2, title: "About", link: "/about", has_dropdown: false },
+  {
+    id: 3,
+    title: "Services",
+    link: "/services",
+    has_dropdown: true,
+    sub_menus: [
+      { title: "Digital Marketing Agency", link: "/services/digital-marketing" },
+      {
+        title: "Website Development Company",
+        link: "/services/website-design-development",
+      },
+      { title: "AI Solutions for Business", link: "/services/ai-solutions" },
+      { title: "SEO Services Near Me", link: "/services/seo-services" },
+      { title: "Business Automation Tools", link: "/services/business-automation" },
+      { title: "Credit Repair & Legal Support", link: "/services/legal-services" },
+      { title: "Reputation & Review Management", link: "/services/reputation-and-review-management" },
+      { title: "Calendar Bookings & Appointments", link: "/services/calendar-bookings-and-appointments" },
+      { title: "Custom CRM Development", link: "/services/custom-crm-development" },
+    ],
+  },
+  { id: 4, title: "Pricing", link: "/pricing", has_dropdown: false },
+  { id: 5, title: "Blogs", link: "/blogs", has_dropdown: false },
+ 
+];
 
 // Testimonials Component
 const testimonial_data = [
@@ -218,24 +255,42 @@ const ContactForm = () => {
     e.preventDefault();
     setLoading(true);
     setResponseMessage("");
+    setError(false);
 
-    // Mock API call - replace with your actual API endpoint
     try {
       const response = await fetch('/api/contact', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name,
-    email,
-    phone,
-    message,
-    smsConsent,
-    marketingConsent,
-  }),
-});
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          message,
+          smsConsent,
+          marketingConsent,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setError(false);
+        setResponseMessage(data.message || "Thank you! Your message has been sent successfully.");
+        // Reset form
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+        setSmsConsent(false);
+        setMarketingConsent(false);
+      } else {
+        setError(true);
+        setResponseMessage(data.error || "Failed to send message. Please try again.");
+      }
     } catch (error) {
+      console.error('Contact form error:', error);
       setError(true);
       setResponseMessage("Error sending message. Please try again.");
     } finally {
@@ -648,7 +703,63 @@ const Hero = () => {
 
 // Header Component
 const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState<Boolean>(false);
+  const [scrolled, setScrolled] = useState<Boolean>(false);
+  const [activeMenu, setActiveMenu] = useState<number | null>(null);
+  const [navTitle, setNavTitle] = useState<string>("");
+  const [promoData, setPromoData] = useState<{
+    promoCode: string | null;
+    title?: string;
+    description?: string;
+    discountPercentage?: number;
+    expiryDate?: string;
+    minimumOrderAmount?: number;
+  } | null>(null);
+
+  const handleActive = () => setOpen(!open);
+
+  useEffect(() => {
+    const fetchPromoCode = async () => {
+      try {
+        const res = await fetch("/api/get-active-promo", {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add API key header if needed in the future
+            // 'x-api-key': process.env.NEXT_PUBLIC_API_KEY || ''
+          },
+        });
+        
+        if (!res.ok) {
+          // If API endpoint doesn't exist or fails, silently continue without promo
+          console.log("Promo API not available:", res.status);
+          setPromoData(null);
+          return;
+        }
+        
+        const data = await res.json();
+        console.log("Fetch response:", data);
+        
+        if (data.success && data.promoCode) {
+          setPromoData({
+            promoCode: data.promoCode,
+            title: data.title,
+            description: data.description,
+            discountPercentage: data.discountPercentage,
+            expiryDate: data.expiryDate,
+            minimumOrderAmount: data.minimumOrderAmount
+          });
+        } else {
+          setPromoData(null);
+        }
+      } catch (error) {
+        // Silently handle errors - promo code is optional
+        console.log("Promo code fetch failed (expected if API not implemented):", error);
+        setPromoData(null);
+      }
+    };
+    fetchPromoCode();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -656,8 +767,13 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const openMobileMenu = (menu: string) => {
+    setNavTitle(navTitle === menu ? "" : menu);
+  };
+
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+    <>
+      {/* Top Bar */}
       <div className="topbar">
         <div className="container mx-auto">
           <div className="topbar-wrapper">
@@ -675,6 +791,12 @@ const Header = () => {
               </div>
               <div className="contact-item">
                 <span className="contact-icon">
+                  <i className="fa-solid fa-robot"></i>
+                </span>
+                <a href="tel:+18663575662">+1 (866) 357-5662</a>
+              </div>
+              <div className="contact-item">
+                <span className="contact-icon">
                   <Image
                     src="/assets/img/mail.svg"
                     alt="Email"
@@ -682,15 +804,279 @@ const Header = () => {
                     height={16}
                   />
                 </span>
-                <a href="mailto:info@everythingainow.com">info@everythingainow.com</a>
+                <a href="mailto:info@everythingainow.com">
+                  info@everythingainow.com
+                </a>
               </div>
+              {promoData && promoData.promoCode && (
+                <div className="contact-item">
+                  <span className="contact-icon">
+                    <i className="ti-money"></i>
+                  </span>
+                  <span className="text-white">
+                    {promoData.title ? promoData.title : `Promo Code: ${promoData.promoCode}`}
+                    {promoData.minimumOrderAmount != null && promoData.minimumOrderAmount > 0 && ` (Min $${promoData.minimumOrderAmount})`}
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="topbar-social">
+              <a
+                href="https://www.facebook.com/people/Everything-AI/61576853892501/"
+                className="social-link"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebookF />
+              </a>
+              <a
+                href="https://www.instagram.com/everythingai01/"
+                className="social-link"
+                aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/everything-ai-llc-686521367/"
+                className="social-link"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedinIn />
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-
-    </header>
+      {/* Main Header */}
+      <header className={`futuristic-header ${scrolled ? "scrolled" : ""}`}>
+        <div className="header-bg-glow"></div>
+        <div className="header-bg-pattern"></div>
+        <div className="container-fluid">
+          <div className="header-inner">
+            <div className="header-logo">
+              <Link href="/">
+                <img
+                  src="/assets/img/logo-top.png"
+                  alt="Everything AI Logo"
+                  title="Everything AI - AI Services and Solutions Logo"
+                />
+              </Link>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <nav className="main-navigation">
+              <ul className="nav-menu">
+                {menu_data.map((item, i) => (
+                  <li
+                    key={i}
+                    className={`nav-item ${
+                      item.has_dropdown ? "has-dropdown" : ""
+                    } ${activeMenu === item.id ? "active" : ""}`}
+                    onMouseEnter={() => setActiveMenu(item.id)}
+                    onMouseLeave={() => setActiveMenu(null)}
+                  >
+                    <Link href={item.link} className="nav-link">
+                      <span className="nav-text">{item.title}</span>
+                      {item.has_dropdown && (
+                        <span className="dropdown-indicator">
+                          <svg
+                            width="10"
+                            height="6"
+                            viewBox="0 0 10 6"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1 1L5 5L9 1"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </span>
+                      )}
+                    </Link>
+                    
+                    {/* Dropdown Menu */}
+                    {item.has_dropdown &&
+                      item.sub_menus &&
+                      item.sub_menus.length > 0 && (
+                        <div className="dropdown-panel">
+                          <div className="dropdown-header">
+                            <span className="dropdown-title">Services</span>
+                          </div>
+                          <div className="dropdown-content">
+                            <div className="row">
+                              <div className="col-md-6">
+                                <ul className="dropdown-list">
+                                  {item.sub_menus
+                                    .slice(
+                                      0,
+                                      Math.ceil(item.sub_menus.length / 2)
+                                    )
+                                    .map((sub_item, index) => (
+                                      <li key={index} className="dropdown-item">
+                                        <Link
+                                          href={sub_item.link}
+                                          className="dropdown-link"
+                                        >
+                                          {sub_item.title}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                </ul>
+                              </div>
+                              <div className="col-md-6">
+                                <ul className="dropdown-list">
+                                  {item.sub_menus
+                                    .slice(Math.ceil(item.sub_menus.length / 2))
+                                    .map((sub_item, index) => (
+                                      <li key={index} className="dropdown-item">
+                                        <Link
+                                          href={sub_item.link}
+                                          className="dropdown-link"
+                                        >
+                                          {sub_item.title}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            
+            {/* Header Actions */}
+            <div className="header-actions">
+              <Link href="/contact" className="action-button">
+                <span className="button-text">Get Started</span>
+                <span className="button-icon">
+                  <svg
+                    width="16"
+                    height="16.5"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 1L15 8L8 15"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M1 8H15"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            </div>
+            
+            {/* Mobile Menu Toggle */}
+            <button
+              className={`menu-toggle ${open ? "active" : ""}`}
+              onClick={handleActive}
+              aria-label="Toggle Menu"
+            >
+              <span className="toggle-line"></span>
+              <span className="toggle-line"></span>
+              <span className="toggle-line"></span>
+            </button>
+          </div>
+        </div>
+        
+        {/* Mobile Menu */}
+        <div className={`mobile-menu ${open ? "active" : ""}`}>
+          <div className="mobile-menu-container">
+            <ul className="mobile-nav">
+              {menu_data.map((item, i) => (
+                <li
+                  key={i}
+                  className={`mobile-nav-item ${
+                    item.has_dropdown ? "has-dropdown" : ""
+                  } ${navTitle === item.title ? "active" : ""}`}
+                >
+                  <div
+                    className="mobile-nav-header"
+                    onClick={() => openMobileMenu(item.title)}
+                  >
+                    <Link href={item.link} className="mobile-nav-link">
+                      {item.title}
+                    </Link>
+                    {item.has_dropdown && (
+                      <span className="mobile-dropdown-toggle">
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M6 1V11"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                          <path
+                            d="M1 6H11"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </span>
+                    )}
+                  </div>
+                  {item.has_dropdown && (
+                    <div
+                      className={`mobile-dropdown ${
+                        navTitle === item.title ? "active" : ""
+                      }`}
+                    >
+                      <ul className="mobile-dropdown-list">
+                        {item?.sub_menus?.map((sub_item, index) => (
+                          <li key={index} className="mobile-dropdown-item">
+                            <Link
+                              href={sub_item.link}
+                              className="mobile-dropdown-link"
+                            >
+                              {sub_item.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div className="mobile-actions">
+              <Link href="/contact" className="mobile-action-button">
+                Get Started Now
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
+    </>
   );
 };
 
