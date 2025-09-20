@@ -239,6 +239,115 @@ const Testimonials = () => {
   );
 };
 
+// FAQ Component
+const faq_data = [
+  {
+    id: "One",
+    question: `What is Everything AI?`,
+    answer: `Everything AI is an all-in-one AI-powered marketing and sales platform designed to help businesses grow, automate workflows, and optimize operations using advanced tools and expert strategies.`,
+  },
+  {
+    id: "Two",
+    question: `How can Everything AI help my business?`,
+    answer: `We provide AI-driven solutions that enhance marketing, sales, customer engagement, and automation. From CRM and email campaigns to sales funnels and analytics, our platform streamlines business operations for better results.`,
+  },
+  {
+    id: "Three",
+    question: `Who is Everything AI for?`,
+    answer: `We serve small to mid-sized businesses, e-commerce brands, professional services like doctors, lawyers, real estate agents, local businesses, and tech companies looking to scale efficiently and anyone who needs their business to grow.`,
+  },
+  {
+    id: "Four",
+    question: `Can Everything AI help with lead generation?`,
+    answer: `Yes! Our AI-powered tools identify high-quality leads, automate follow-ups, and personalize outreach to convert prospects into customers more efficiently. We also optimize ad campaigns and landing pages to maximize conversions.`,
+  },
+  {
+    id: "Five",
+    question: `How does Everything AI differ from other marketing platforms?`,
+    answer: `Unlike traditional marketing agencies or software tools, Everything AI combines AI technology + expert teams into one platform. You don't have to juggle multiple software solutions or hire different agencies—we provide a seamless, all-in-one solution tailored for your business growth.`,
+  },
+  {
+    id: "Six",
+    question: `Can I use Everything AI for social media and paid ads?`,
+    answer: `Yes! Our platform helps manage and optimize Google Ads, Facebook Ads, Instagram, LinkedIn, Amazon Ads, and more. You also get AI-powered tools for content creation, social media scheduling, and performance tracking.`,
+  },
+  {
+    id: "Seven",
+    question: `What AI-powered tools are included in Everything AI?`,
+    answer: `We provide AI-enhanced solutions for:
+Marketing & Automation (email sequences, chatbots, lead nurturing)
+AI Virtual Assistants (customer interactions, review responses, workflow automation)
+Sales & CRM (automated lead tracking, SMS/email campaigns)
+Website & Funnel Builders (drag-and-drop site and sales funnel creation) Business Intelligence & Analytics (data-driven insights and reporting)`,
+  },
+  {
+    id: "Eight",
+    question: `Do I need technical skills to use Everything AI?`,
+    answer: `No! Our platform is user-friendly and built for businesses of all sizes, even those without technical expertise. We also provide support and training to help you make the most of our tools.`,
+  },
+  {
+    id: "Nine",
+    question: `Is Everything AI a subscription-based service?`,
+    answer: `Yes, we offer flexible pricing plans based on your business needs. Contact us for custom packages that align with your goals.`,
+  },
+  {
+    id: "Ten",
+    question: `Does Everything AI offer customer support?`,
+    answer: `Yes! We provide live virtual assistants and a dedicated support team to help with any technical issues, strategy questions, or implementation guidance.`,
+  },
+  {
+    id: "Eleven",
+    question: `How do I get started with Everything AI?`,
+    answer: `Simply contact us or sign up for a consultation. Our team will assess your needs and provide a customized plan to drive revenue and scale your business like never before.`,
+  },
+];
+
+const FaqArea = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+
+  const toggleActive = (index: number) => {
+    setActiveIndex(index === activeIndex ? null : index);
+  };
+
+  return (
+    <section className="faq_area section-padding">
+      <div className="container">
+        <div className="section-title text-center">
+          <span>Faq</span>
+          <h2>See all question <br /> & answer</h2>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-lg-12 col-sm-12 col-xs-12">
+            <div className="accordion" id="accordionExample">
+              {faq_data.map((item, i) => (
+                <div key={i} className="accordion-item">
+                  <h2 className="accordion-header">
+                    <button
+                      className={`accordion-button ${activeIndex === i ? 'active' : ''}`}
+                      type="button"
+                      onClick={() => toggleActive(i)}
+                    >
+                      {item.question}
+                    </button>
+                  </h2>
+                  <div
+                    className={`accordion-collapse collapse ${activeIndex === i ? 'show' : ''}`}
+                    aria-labelledby={`heading${item.id}`}
+                  >
+                    <div className="accordion-body">
+                      {item.answer}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Contact Form Component
 const ContactForm = () => {
   const [name, setName] = useState("");
@@ -1341,6 +1450,9 @@ const StandaloneLandingPage = () => {
       </div>
       <div id="testimonials">
         <Testimonials />
+      </div>
+      <div id="faq">
+        <FaqArea />
       </div>
       <div id="contact">
         <ContactForm />
